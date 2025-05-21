@@ -50,8 +50,8 @@ async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 def main():
-    # Token do bot (diretamente no código para este exemplo)
-    TOKEN = "7842704675:AAEf6lsuRYUOs0T29FXZSJ-Syck4dDhC7ps"
+    # Token do bot (obtém da variável de ambiente ou usa o valor direto)
+    TOKEN = os.environ.get("TELEGRAM_TOKEN", "7842704675:AAEf6lsuRYUOs0T29FXZSJ-Syck4dDhC7ps")
     
     # Cria a aplicação
     application = Application.builder().token(TOKEN).build()
@@ -65,8 +65,11 @@ def main():
     # Handler para comandos desconhecidos
     application.add_handler(MessageHandler(filters.COMMAND, unknown))
     
+    # Imprime mensagem indicando que o bot está rodando
+    print("Bot iniciado!")
+    
     # Inicia o bot
-    application.run_polling()
+    application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":
     main()
